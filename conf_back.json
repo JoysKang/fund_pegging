@@ -1,0 +1,12 @@
+{
+  "ding_webhook": "https://oapi.dingtalk.com/robot/send?access_token=f01bxxx",
+  "lark_webhook": "https://open.feishu.cn/open-apis/bot/v2/hook/ec001bxxx",
+  "wecom_cid": "ww27xxx",
+  "wecom_aid": "100xxx",
+  "wecom_secret": "qLw-Xxxx",
+  "wecom_sendkey": "8d1dxxx",
+  "wecom_network_url": "https://service-e29818w2-xxx",
+  "authorization": "secret_mZTk6jxxx",
+  "databases_id": "a1498dfxxx",
+  "send_type": "1"
+}

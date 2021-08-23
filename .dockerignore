@@ -1,0 +1,6 @@
+*.git
+*/temp*
+*/*/temp*
+temp?
+.idea
+README.md
