@@ -7,7 +7,7 @@ import akshare as ak
 
 from utils.trading_day import is_trading_day
 from utils.conf import load_json
-# 下边三行没有使用动态导入，IED提示会没有使用，但不能删除
+# 下边三行使用动态导入，IED提示会没有使用，但不能删除
 from utils.ding import text
 from utils.lark import send_lark
 from utils.wecom import send_to_wecom_by_txy, send_to_wecom
