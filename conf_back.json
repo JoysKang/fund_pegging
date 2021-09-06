@@ -1,4 +1,5 @@
 {
+  "bark_token": "6rqxxx",
   "ding_webhook": "https://oapi.dingtalk.com/robot/send?access_token=f01bxxx",
   "lark_webhook": "https://open.feishu.cn/open-apis/bot/v2/hook/ec001bxxx",
   "wecom_cid": "ww27xxx",

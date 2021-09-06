@@ -11,6 +11,7 @@ from utils.conf import load_json
 from utils.ding import text
 from utils.lark import send_lark
 from utils.wecom import send_to_wecom_by_txy, send_to_wecom
+from utils.bark import send_bark
 
 conf = load_json("./conf.json")
 
@@ -20,6 +21,7 @@ send_func = {
     "2": "send_lark(message)",
     "3": "send_to_wecom(message)",
     "4": "send_to_wecom_by_txy(message)",
+    "5": "send_bark(message)",
 }
 
 

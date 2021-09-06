@@ -44,5 +44,11 @@ def send_to_wecom_by_txy(message, to_user=''):
 
 
 if __name__ == '__main__':
+    conf = load_json("../conf.json")
+    wecom_cid = conf.get("wecom_cid")  # 企业微信自建公司ID
+    wecom_aid = conf.get("wecom_aid")  # 自建应用ID
+    wecom_secret = conf.get("wecom_secret")  # 应用secret
+    url = f"{conf.get('wecom_network_url')}?sendkey={conf.get('wecom_sendkey')}&msg_type=text"
+
     # send_to_wecom("推送测试\r\n测试换行")
     send_to_wecom_by_txy("推送测试\r\n测试换行")

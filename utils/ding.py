@@ -58,4 +58,6 @@ def link(content=None):
 
 
 if __name__ == '__main__':
+    conf = load_json("../conf.json")
+    webhook_url = conf.get('ding_webhook')
     text("基金盯盘：我就是我, @XXX 是不一样的烟火")

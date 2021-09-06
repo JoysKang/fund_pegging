@@ -27,4 +27,5 @@ def send_lark(message=""):
 
 
 if __name__ == '__main__':
+    conf = load_json("../conf.json")
     send_lark("test")
