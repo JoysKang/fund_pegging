@@ -22,6 +22,7 @@ send_func = {
     "3": "send_to_wecom(message)",
     "4": "send_to_wecom_by_txy(message)",
     "5": "send_bark(message)",
+    "6": "send_chanify(message)",
 }
 
 
