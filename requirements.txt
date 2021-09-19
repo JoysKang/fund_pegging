@@ -1,4 +1,4 @@
-akshare==1.0.9
-chinese_calendar==1.5.0
-uvicorn==0.14.0
-fastapi==0.66.0
+akshare==1.1.19
+chinese_calendar==1.5.1
+uvicorn==0.15.0
+fastapi==0.68.1
