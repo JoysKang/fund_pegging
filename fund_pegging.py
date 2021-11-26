@@ -42,7 +42,9 @@ def get_data():
         'Content-Type': 'application/json',
     }
 
-    _data = '{ "filter": { "or": [ { "property": "Status", "select": { "equals": "启用" } } ] } }'.encode()
+    _data = '{"filter":{"or":[{"and":[{"property":"Status","select":{"equals":"启用"}},{"property":"Type","select":{' \
+            '"equals":"场内"}}]},{"and":[{"property":"Status","select":{"equals":"启用"}},{"property":"Type",' \
+            '"select":{"equals":"场外"}}]}]}}'.encode()
 
     response = requests.post(
         f'https://api.notion.com/v1/databases/{conf.get("databases_id")}/query',
@@ -106,9 +108,9 @@ async def pegging():
 
 
 if __name__ == '__main__':
-    # get_data()
+    get_data()
 
-    import asyncio
-    loop = asyncio.get_event_loop()
-    result = loop.run_until_complete(pegging())
-    loop.close()
+    # import asyncio
+    # loop = asyncio.get_event_loop()
+    # result = loop.run_until_complete(pegging())
+    # loop.close()
