@@ -8,6 +8,7 @@ import easyquotation
 
 from utils.trading_day import is_trading_day
 from utils.conf import load_json
+from utils.util import send_to_message
 
 conf = load_json("./conf.json")
 
@@ -50,7 +51,9 @@ def get_symbols():
         headers=headers, data=_data)
     content = json.loads(response.content)
 
-    return [r['properties']['Code']['rich_text'][0]['plain_text'] for r in content['results']]
+    return [{'code': r['properties']['Code']['rich_text'][0]['plain_text'],
+             'name': r['properties']['Name']['title'][0]['plain_text']}
+            for r in content['results']]
 
 
 def get_12days_data(symbol='sz300015'):
@@ -58,13 +61,29 @@ def get_12days_data(symbol='sz300015'):
     data = ak.stock_zh_a_daily(symbol).sort_values(by='date', ascending=False).iloc[:12]
     close_list = data['close'].tolist()[::-1]
 
-    symbol = re.findall(r"\d+\.?\d*", symbol)
-    return {symbol[0]: close_list}
-    # close_list = [48.22, 47.59, 48.34, 48.35, 49.43, 49.5, 49.6, 49.69, 49.86, 49.95, 49.99, 50.11]
-    # print(close_list)
-    # print(mt5_up(close_list), "===")
-    # # print("00000")
-    # # print(mt5_down(close_list), "===")
+    return close_list
+
+
+async def task(symbol=None, prices=None):
+    """处理任务"""
+    if not symbol or not prices:
+        return None
+
+    code = symbol['code']
+    price = prices[re.findall(r"\d+\.?\d*", code)[0]]
+    close_list = get_12days_data(code)
+    close_list.append(price)
+
+    # message IDE 会提示没有使用，但其实下边的 eval 使用了
+    message = f"九转序列盯盘: 股票{symbol['name']}, 代码 {code}, 呈卖出结构, 请留意"
+    if mt5_up(close_list):
+        message = f"九转序列盯盘: 股票{symbol['name']}, 代码 {code}, 呈卖出结构, 请留意"
+
+    elif mt5_down(close_list):
+        message = f"九转序列盯盘: 股票{symbol['name']}, 代码 {code}, 呈买入结构, 请留意."
+
+    send_to_message(message)
+    return code
 
 
 def get_price(symbol_list=None):
@@ -90,9 +109,17 @@ async def main():
         return
 
     symbols = get_symbols()
+    code_list = [s['code'] for s in symbols]
+    prices = get_price(code_list)
+    results = []
+    for symbol in symbols:
+        results.append(await task(symbol, prices))  # 编码，涨跌幅，警戒线
 
-    data = get_12days_data('sz300015')
-    prices = get_price(['sz300015'])
+    results = list(filter(None, results))  # 过滤是 None 的数据
+    if results:
+        print(f"日期：{datetime.date.today()}，报警的监控条数{len(results)}")
+    else:
+        print(f"日期：{datetime.date.today()}，没有需要报警的监控")
 
 
 if __name__ == "__main__":

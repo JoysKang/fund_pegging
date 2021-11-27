@@ -7,11 +7,7 @@ import akshare as ak
 
 from utils.trading_day import is_trading_day
 from utils.conf import load_json
-# 下边三行使用动态导入，IED提示会没有使用，但不能删除
-from utils.ding import text
-from utils.lark import send_lark
-from utils.wecom import send_to_wecom_by_txy, send_to_wecom
-from utils.bark import send_bark
+from utils.util import send_to_message
 
 conf = load_json("./conf.json")
 
@@ -76,7 +72,7 @@ async def task(code=None, percent="", content=None):
 
     # message IDE 会提示没有使用，但其实下边的 eval 使用了
     message = f"基金盯盘: {content.get('name')} 今日跌幅超过 {cordon}% 警戒线, 当前跌幅 {percent}% , 基金代码 {code} ."
-    eval(send_func.get((conf.get("send_type"))))  # 发送
+    send_to_message(message)
     return code
 
 
