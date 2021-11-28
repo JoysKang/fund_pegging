@@ -75,14 +75,16 @@ async def task(symbol=None, prices=None):
     close_list.append(price)
 
     # message IDE 会提示没有使用，但其实下边的 eval 使用了
-    message = f"九转序列盯盘: 股票{symbol['name']}, 代码 {code}, 呈卖出结构, 请留意"
+    message = ""
+    time_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%m:%S')
     if mt5_up(close_list):
-        message = f"九转序列盯盘: 股票{symbol['name']}, 代码 {code}, 呈卖出结构, 请留意"
+        message = f"九转序列盯盘: 股票: {symbol['name']}, 代码: {code}, 时间: {time_str}, 呈卖出结构, 请留意"
 
     elif mt5_down(close_list):
-        message = f"九转序列盯盘: 股票{symbol['name']}, 代码 {code}, 呈买入结构, 请留意."
+        message = f"九转序列盯盘: 股票: {symbol['name']}, 代码: {code}, 时间: {time_str}, 呈买入结构, 请留意."
 
-    send_to_message(message)
+    if message:
+        send_to_message(message)
     return code
 
 

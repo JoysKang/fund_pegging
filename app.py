@@ -3,6 +3,7 @@ import asyncio
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fund_pegging import pegging
+from mt5 import main as mt5_main
 
 app = FastAPI()
 
@@ -20,6 +21,7 @@ class Item(BaseModel):
 async def invoke(item: Item):
     # 运行监听(腾讯云云函数不会等待异步任务结束，所以这里自行等待)
     await asyncio.create_task(pegging())
+    await asyncio.create_task(mt5_main())
 
     return {"message": "Ok!"}
 
