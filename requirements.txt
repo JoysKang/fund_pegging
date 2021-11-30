@@ -4,3 +4,4 @@ easyquotation==0.7.4
 requests==2.26.0
 akshare==1.1.19
 fastapi==0.70.0
+uvicorn==0.15.0
