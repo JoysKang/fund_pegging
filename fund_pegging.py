@@ -68,6 +68,7 @@ async def task(code=None, percent="", content=None):
     percent = percent.replace("-", '').replace("%", '')
     cordon = content.get('cordon')
     if percent < cordon:  # 不需要发通知
+        print(f"{code}，{content.get('name')}，-{percent}%，-{cordon}%，不需要发通知")
         return None
 
     # message IDE 会提示没有使用，但其实下边的 eval 使用了
@@ -104,9 +105,9 @@ async def pegging():
 
 
 if __name__ == '__main__':
-    get_data()
+    # get_data()
 
-    # import asyncio
-    # loop = asyncio.get_event_loop()
-    # result = loop.run_until_complete(pegging())
-    # loop.close()
+    import asyncio
+    loop = asyncio.get_event_loop()
+    result = loop.run_until_complete(pegging())
+    loop.close()
