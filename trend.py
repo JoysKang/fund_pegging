@@ -20,7 +20,7 @@ https://doc.shinnytech.com/tqsdk/latest/index.html
 import decimal
 
 import requests
-
+from tqsdk import TqApi, TqAuth
 
 
 # 修改舍入方式为四舍五入
@@ -37,27 +37,21 @@ def get_data(symbol=None):
     if symbol is None:
         return 0
 
-    params = (
-        ('symbol', symbol),
-        ('scale', '30'),
-        ('ma', 'no'),
-        ('datalen', '1023'),
-    )
-
     response = requests.get(
-        f'https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol={symbol}&scale=30&ma=&datalen=220',
-        params=params)
+        f'https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol={symbol}&scale=30&ma=&datalen=220')
     data = response.json()
     data = [d for d in data if "14:30:00" in d['day']]
     increase = (float(data[-1]['close']) - float(data[-22]['close'])) / float(data[-22]['close']) * 100
     increase = float(decimal.Decimal(str(increase)).quantize(decimal.Decimal("0.00")))
-    print(f'{symbol} 涨跌幅度: {increase}')
+    # print(f'{symbol} 涨跌幅度: {increase}')
     return {"symbol": symbol, "increase": increase}
 
 
 def get_current_symbol():
     """获取当前持有的品种"""
-    pass
+    api = TqApi(auth=TqAuth("joyskang", "kang5113"))
+    account = api.get_account()
+    print(account)
 
 
 def main():
@@ -68,5 +62,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    get_current_symbol()
 

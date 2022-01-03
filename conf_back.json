@@ -9,5 +9,7 @@
   "wecom_network_url": "https://service-e29818w2-xxx",
   "authorization": "secret_mZTk6jxxx",
   "databases_id": "a1498dfxxx",
-  "send_type": "1"
+  "send_type": "1",
+  "tq_account": "xxx",
+  "tq_password": "xxx"
 }
