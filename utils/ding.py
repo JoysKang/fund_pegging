@@ -24,12 +24,11 @@ def text(content=""):
     }
     """
     # 发送钉钉机器人通知
-    try:
-        msg_data = dict(msgtype='text', text=dict(content=content))
-        print(webhook_url, "//")
-        requests.post(webhook_url, json=msg_data)
-    except:
-        traceback.print_exc()
+    msg_data = dict(msgtype='text', text=dict(content=content))
+    print(webhook_url, "//")
+    response = requests.post(webhook_url, json=msg_data)
+    if response.status_code != 200:
+        print(response.text)
 
 
 def link(content=None):
@@ -47,14 +46,13 @@ def link(content=None):
     }
     """
     # 发送钉钉机器人通知
-    try:
-        if not isinstance(content, dict):
-            raise FError("content must be a dictionary")
+    if not isinstance(content, dict):
+        raise FError("content must be a dictionary")
 
-        msg_data = dict(msgtype='link', link=content)
-        requests.post(webhook_url, json=msg_data)
-    except:
-        traceback.print_exc()
+    msg_data = dict(msgtype='link', link=content)
+    response = requests.post(webhook_url, json=msg_data)
+    if response.status_code != 200:
+        print(response.text)
 
 
 if __name__ == '__main__':
