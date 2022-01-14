@@ -2,6 +2,7 @@ import json
 
 
 def load_json(file_path="../conf.json"):
+    """加载配置文件"""
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)

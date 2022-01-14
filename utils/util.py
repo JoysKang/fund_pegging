@@ -10,6 +10,7 @@ conf = load_json("./conf.json")
 
 
 def send_to_message(message):
+    """发送消息"""
     send_func = {
         "1": "text(message)",
         "2": "send_lark(message)",

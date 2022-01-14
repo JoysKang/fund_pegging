@@ -6,6 +6,7 @@ conf = load_json("./conf.json")
 
 
 def send_chanify(message=""):
+    """使用 chanify 发送消息"""
     data = parse.urlencode({'title': 'fundPegging', 'text': message, 'sound': 1}).encode()
     req = request.Request(f"https://api.chanify.net/v1/sender/{conf.get('chanify_token')}", data=data)
     request.urlopen(req)

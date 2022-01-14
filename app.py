@@ -16,9 +16,9 @@ class Item(BaseModel):
     Message: str
 
 
-# 腾讯事件函数
 @app.post('/event-invoke')
 async def invoke(item: Item):
+    """腾讯事件函数"""
     # 运行监听(腾讯云云函数不会等待异步任务结束，所以这里自行等待)
     await asyncio.create_task(pegging())
     await asyncio.create_task(mt5_main())
@@ -28,4 +28,5 @@ async def invoke(item: Item):
 
 @app.get("/")
 async def root():
+    """连通性检查"""
     return {"message": "Hello World"}
