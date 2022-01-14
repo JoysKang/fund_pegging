@@ -28,8 +28,7 @@ def send_to_wecom(text, wecom_touid='@all'):
         }
         response = requests.post(send_msg_url, data=json.dumps(data)).content
         return response
-    else:
-        return False
+    return False
 
 
 def send_to_wecom_by_txy(message, to_user=''):

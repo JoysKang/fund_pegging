@@ -20,8 +20,8 @@ def mt5_down(close_list, index=4, down=False):
 
     if close_list[index] < min(close_list[index-4:index]):   # 小于前四日的收盘价
         return mt5_up(close_list, index + 1, True)
-    else:
-        return False
+
+    return False
 
 
 def mt5_up(close_list, index=4, up=False):
@@ -31,8 +31,8 @@ def mt5_up(close_list, index=4, up=False):
 
     if close_list[index] > max(close_list[index-4:index]):   # 大于前四日的收盘价
         return mt5_up(close_list, index + 1, True)
-    else:
-        return False
+
+    return False
 
 
 def get_symbols():
