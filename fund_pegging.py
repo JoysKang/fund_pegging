@@ -88,7 +88,7 @@ async def pegging():
         df = get_all_fund_estimation()
     except Exception as e:  # 重试
         print(e)
-        print(f"获取基金估值失败，重试中...")
+        print("获取基金估值失败，重试中...")
         df = get_all_fund_estimation()
     data = get_data()
     code_list = data.keys()
