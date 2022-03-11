@@ -59,9 +59,7 @@ def get_symbols():
 def get_12days_data(symbol='sz300015'):
     """获取前12天的数据"""
     data = ak.stock_zh_a_daily(symbol).sort_values(by='date', ascending=False).iloc[:12]
-    close_list = data['close'].tolist()[::-1]
-
-    return close_list
+    return data['close'].tolist()[::-1]
 
 
 async def task(symbol=None, prices=None):
@@ -114,11 +112,8 @@ async def main():
     code_list = [s['code'] for s in symbols]
     prices = get_price(code_list)
     results = []
-    for symbol in symbols:
-        results.append(await task(symbol, prices))  # 编码，涨跌幅，警戒线
-
-    results = list(filter(None, results))  # 过滤是 None 的数据
-    if results:
+    results.extend(await task(symbol, prices) for symbol in symbols)
+    if results := list(filter(None, results)):
         print(f"日期：{datetime.date.today()}，报警的监控条数{len(results)}")
     else:
         print(f"日期：{datetime.date.today()}，没有需要报警的监控")
