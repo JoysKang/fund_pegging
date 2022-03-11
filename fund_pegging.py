@@ -26,8 +26,7 @@ def get_all_fund_estimation():
     """通过 akshare 获取所有基金(天天基金)的估值
     返回值类型 pandas
     """
-    fund_em_value_estimation_df = ak.fund_em_value_estimation()
-    return fund_em_value_estimation_df
+    return ak.fund_em_value_estimation()
 
 
 def get_data():
@@ -46,15 +45,11 @@ def get_data():
         f'https://api.notion.com/v1/databases/{conf.get("databases_id")}/query',
         headers=headers, data=_data)
     content = json.loads(response.content)
-    data = {}
-    for result in content['results']:
-        data[result['properties']['Code']['rich_text'][0]['plain_text']] = {
+    return {result['properties']['Code']['rich_text'][0]['plain_text']: {
             "name": result['properties']['Name']['title'][0]['plain_text'],
             "cordon": result['properties']['Decline']['select']['name'],
             "communication": ""
-        }
-
-    return data
+        } for result in content['results']}
 
 
 async def task(code=None, percent="", content=None):
@@ -99,8 +94,7 @@ async def pegging():
         code = row[0]
         results.append(await task(code, row[1], data[code]))  # 编码，涨跌幅，警戒线
 
-    results = list(filter(None, results))  # 过滤是 None 的数据
-    if results:
+    if results := list(filter(None, results)):
         print(f"日期：{datetime.date.today()}，报警的监控条数{len(results)}")
     else:
         print(f"日期：{datetime.date.today()}，没有需要报警的监控")
